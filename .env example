@@ -8,6 +8,3 @@ secret = "OTP使用"
 sql_url = 'SQL url,port'
 sql_acc = 'SQL account'
 sql_password = 'SQL password'
-
-# pipenv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-# ngrok http 8000 --url=mordaciously-heedful-holley.ngrok-free.dev
