@@ -290,26 +290,31 @@ def otp_page():
 
 @app.post("/DB_insert")
 def DB_insert(datas : user_data_insert):
+    print('-----執行',DB_insert.__name__,'-----')
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
     insert_row = user_data(
         call_id=datas.call_id,
         ID=datas.id,
         acc=datas.acc,
+        phone=datas.phone,
+        birthday=datas.birthday,
         pwd_verified=datas.pwd_verified,
         write_time=current_time)
-    print(insert_row)
+    print('新增資料列:', insert_row)
 
     with SessionLocal() as s:
         try:
             s.add(insert_row)
             s.commit()
-            print('新增資料成功:',insert_row)
+            print('新增資料成功')
             return DB_result.DB_success(
                 message='新增資料成功',
                 data={
                     'call_id':insert_row.call_id,
                     'ID':insert_row.ID,
                     'acc':insert_row.acc,
+                    'phone':insert_row.phone,
+                    'birthday':insert_row.birthday,
                     'pwd_verified':insert_row.pwd_verified,
                     'write_time':insert_row.write_time
                 })
@@ -320,11 +325,13 @@ def DB_insert(datas : user_data_insert):
                 message='新增失敗',
                 detail=e,
                 data={
-                      'call_id':insert_row.call_id,
-                      'ID':insert_row.ID,
-                      'acc':insert_row.acc,
-                      'pwd_verified':insert_row.pwd_verified,
-                      'write_time':insert_row.write_time
+                    'call_id':insert_row.call_id,
+                    'ID':insert_row.ID,
+                    'acc':insert_row.acc,
+                    'phone':insert_row.phone,
+                    'birthday':insert_row.birthday,
+                    'pwd_verified':insert_row.pwd_verified,
+                    'write_time':insert_row.write_time
                 })
 
 
@@ -335,7 +342,7 @@ def DB_select(datas: user_data_select):
         try:
             row = s.scalar(select(user_data).where(user_data.call_id==cid))
             if row is None:
-                print(f"查無資料: session_id={cid}")
+                print(f"查無資料: call id={cid}")
                 return DB_result.DB_error(
                     message='查無資料',
                     detail='',
@@ -349,6 +356,8 @@ def DB_select(datas: user_data_select):
                     "call_id": row.call_id,
                     "ID": row.ID,
                     "acc": row.acc,
+                    "phone": row.phone,
+                    "birthday": row.birthday,
                     "pwd_verified": row.pwd_verified,
                     "write_time": row.write_time
                 })

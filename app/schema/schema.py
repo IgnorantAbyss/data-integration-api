@@ -21,6 +21,8 @@ class user_data_insert(BaseModel):
     call_id : str
     id : str = ''
     acc : str = ''
+    phone : str = ''
+    birthday : str = ''
     pwd_verified : bool = False
 
 

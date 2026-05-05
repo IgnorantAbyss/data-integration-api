@@ -9,9 +9,11 @@ class user_data(Base):
     call_id = Column(String(100), primary_key=True)
     ID = Column(String(10))
     acc = Column(String(20))
+    phone = Column(String(10))
+    birthday = Column(String(8))
     pwd_verified = Column(Boolean)
     is_loaded = Column(Boolean)
     write_time = Column(DateTime)
 
     def __repr__(self):
-        return f"call_id={self.call_id}, ID={self.ID}, acc={self.acc}, pwd_verified={self.pwd_verified}"
+        return f"call_id={self.call_id}, ID={self.ID}, acc={self.acc}, phone={self.phone}, birthday={self.birthday}, pwd_verified={self.pwd_verified}"
